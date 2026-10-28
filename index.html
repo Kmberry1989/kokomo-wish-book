@@ -190,7 +190,6 @@ ol.plan b{ color:var(--red); }
 
 <div class="bar" role="toolbar" aria-label="Book controls">
   <button id="prevBtn" type="button">← Prev page</button>
-  <span class="pill" id="pagePill">Cover</span>
   <button id="nextBtn" type="button">Next page →</button>
   <button class="ghost" id="tocBtn" type="button">Contents</button>
   <span class="pill" id="wishPill">Circled wishes: <b>0</b></span>
@@ -560,19 +559,16 @@ ol.plan b{ color:var(--red); }
   var total = leaves.length;
   var current = 0; // index of visible page
   var busy = false;
-  var pill = document.getElementById('pagePill');
   var prevBtn = document.getElementById('prevBtn');
   var nextBtn = document.getElementById('nextBtn');
   var sidePrev = document.getElementById('sidePrev');
   var sideNext = document.getElementById('sideNext');
   var bookEl = document.getElementById('book');
-  var names = ['Cover','Welcome & The Plan','Contents','Sound of Music',"Palmer's Jewelry",'The Elevated Hippie','Fired Arts Studio','Kokomo Art Association','P.F. Hendricks & Co.','Boutiques & Bridal','Kokomo Toys','Cards & Collectibles','Opalescent Glass','Antiques & Home','The Coterie','Eats & Sweet Gifts','First Friday Favorites','First Friday — Pop-Ups','Makers & Curiosities','My Wish List','Saturday Loop','Back Cover'];
   function layout(){
     leaves.forEach(function(leaf,i){
       leaf.classList.toggle('turned', i !== current && !leaf.classList.contains('turning') && !leaf.classList.contains('returning'));
       leaf.style.zIndex = (i === current) ? 10 : 1;
     });
-    pill.textContent = (current===0||current===total-1) ? names[current] : ('Page ' + (current+1) + ' of ' + total + ' · ' + names[current]);
     prevBtn.disabled = current===0; nextBtn.disabled = current===total-1;
     if(sidePrev) sidePrev.disabled = current===0;
     if(sideNext) sideNext.disabled = current===total-1;
