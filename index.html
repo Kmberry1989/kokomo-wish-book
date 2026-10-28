@@ -90,31 +90,23 @@ body{
 }
 .face::-webkit-scrollbar{width:5px}
 .face::-webkit-scrollbar-thumb{background:#c9b586; border-radius:3px}
-/* ---------- curls ---------- */
-.curl{
-  position:absolute; bottom:0; width:58px; height:58px; border:0; cursor:pointer; z-index:5;
-  transition:width .25s, height .25s; background:transparent; padding:0;
+/* ---------- side navigation ---------- */
+.nav-arrow{
+  position:absolute; top:50%; transform:translateY(-50%); z-index:120;
+  width:44px; height:44px; border-radius:50%; border:1px solid rgba(44,36,25,.18);
+  background:rgba(251,243,220,.94); color:var(--ink); cursor:pointer; padding:0;
+  font-size:1.7rem; line-height:1; font-weight:700; display:flex; align-items:center; justify-content:center;
+  box-shadow:0 4px 14px rgba(0,0,0,.28); transition:opacity .2s, background .2s;
 }
-.curl:hover,.curl:focus-visible{ width:84px; height:84px; }
-.curl.next{ right:0; }
-.curl.prev{ left:0; }
-.curl.next::before{
-  content:""; position:absolute; inset:0;
-  background:linear-gradient(315deg, var(--desk2) 0%, var(--desk2) 47%, #fff8e6 50%, #e8d9b0 78%, #c8b384 100%);
-  clip-path:polygon(100% 0, 0 100%, 100% 100%);
-  filter:drop-shadow(-3px -3px 4px rgba(90,60,10,.35)); border-radius:0 0 10px 0;
+.nav-arrow:hover,.nav-arrow:focus-visible{ background:#fff8e6; }
+.nav-arrow.prev-arrow{ left:8px; }
+.nav-arrow.next-arrow{ right:8px; }
+.nav-arrow:disabled{ opacity:.35; }
+@media (max-width:520px){
+  .nav-arrow{ width:40px; height:40px; font-size:1.5rem; }
+  .nav-arrow.prev-arrow{ left:6px; }
+  .nav-arrow.next-arrow{ right:6px; }
 }
-.curl.prev::before{
-  content:""; position:absolute; inset:0;
-  background:linear-gradient(45deg, var(--desk2) 0%, var(--desk2) 47%, #fff8e6 50%, #e8d9b0 78%, #c8b384 100%);
-  clip-path:polygon(0 0, 0 100%, 100% 100%);
-  filter:drop-shadow(3px -3px 4px rgba(90,60,10,.35)); border-radius:0 0 0 10px;
-}
-.curl span{
-  position:absolute; bottom:7px; font-family:"Caveat",cursive; font-size:.95rem; color:var(--red);
-  transform:rotate(-38deg); pointer-events:none; font-weight:700;
-}
-.curl.next span{ right:4px; } .curl.prev span{ left:4px; transform:rotate(38deg); }
 /* ---------- type & components ---------- */
 .kicker{ font-size:.68rem; font-weight:800; letter-spacing:.22em; text-transform:uppercase; color:var(--red); margin:0 0 6px; }
 h1,h2{ font-family:"DM Serif Display",serif; font-weight:400; line-height:1.04; margin:0; }
@@ -124,7 +116,7 @@ p{ margin:0 0 10px; font-size:.9rem; line-height:1.55; color:var(--ink); }
 .small{ font-size:.8rem; color:var(--ink-soft); line-height:1.5; }
 .hand{ font-family:"Caveat",cursive; color:var(--red); font-weight:700; }
 .pageno{ position:absolute; bottom:12px; font-size:.72rem; font-weight:700; letter-spacing:.14em; color:var(--ink-soft); }
-.face:not(.back) .pageno{ right:64px; } .face.back .pageno{ left:64px; }
+.face:not(.back) .pageno{ right:22px; } .face.back .pageno{ left:22px; }
 .addr{ display:flex; flex-wrap:wrap; gap:6px; margin:10px 0 12px; }
 .addr a,.addr span{
   font-size:.74rem; font-weight:700; text-decoration:none; color:var(--teal);
@@ -191,7 +183,7 @@ ol.plan b{ color:var(--red); }
   .cover-face img{ max-height:27dvh; }
   .cover-face h1{ font-size:2.35rem; }
 }
-@media (prefers-reduced-motion: reduce){ .leaf{ transition:none; } .curl{ transition:none; } }
+@media (prefers-reduced-motion: reduce){ .leaf{ transition:none; } .nav-arrow{ transition:none; } }
 </style>
 </head>
 <body>
@@ -205,7 +197,7 @@ ol.plan b{ color:var(--red); }
 </div>
 
 <div class="stage">
-<div class="book" id="book" aria-label="Kokomo Wish Book — flip through with the curled bottom corners">
+<div class="book" id="book" aria-label="Kokomo Wish Book — flip through with the side arrows or by tapping the left or right side of a page">
 
 <!-- PAGE 1 · COVER -->
 <section class="leaf"><div class="face cover-face">
@@ -216,7 +208,6 @@ ol.plan b{ color:var(--red); }
   <span class="priceburst">★ 2026 — THE BIG KOKOMO EDITION ★</span>
   <p style="color:#f3e3bb;font-size:.78rem;margin-top:12px;line-height:1.6">Guitars · Diamonds · Pottery · Boho Dresses<br>Toys · Art Glass · Burgers</p>
   <p class="hand" style="color:#ffd9a8;font-size:1.25rem">Circle what you love — just like Grandma did.</p>
-  <button class="curl next" type="button" data-nav="next" aria-label="Turn to next page"><span>flip ▸</span></button>
 </div></section>
 
 <!-- PAGE 2 · WELCOME + PLAN -->
@@ -225,7 +216,7 @@ ol.plan b{ color:var(--red); }
   <h2>The catalog we wished someone would mail us</h2>
   <hr class="rule">
   <p>Remember the big holiday catalog that landed on the porch with a <i>thunk</i>? You circled things in pen, folded down corners, and left it open on the coffee table as a hint. This is that book — except every single page is a real shop in Kokomo, most of them within a few blocks of each other downtown.</p>
-  <p><b>How to use it:</b> tap the <span class="hand" style="font-size:1.1rem">curled corner</span> at the bottom of each page to turn it. Tap <b>“Circle this wish ♡”</b> on anything you love and it lands on your Wish List near the back.</p>
+  <p><b>How to use it:</b> tap the <span class="hand" style="font-size:1.1rem">‹ › arrows</span> at the sides of each page — or tap the left or right side of the page itself — to turn it. Tap <b>“Circle this wish ♡”</b> on anything you love and it lands on your Wish List near the back.</p>
   <h3 style="margin-top:14px">The plan, in three steps</h3>
   <ol class="plan">
     <li><b>1 · This draft.</b> Every shop below is presented as if it has already said yes — listings built from what each business actually sells or does, with real addresses. Prices are left “in store,” the way a good neighbor would.</li>
@@ -233,8 +224,6 @@ ol.plan b{ color:var(--red); }
     <li><b>3 · The real edition.</b> Photograph the actual shelves, print a short run for the holidays, and keep this digital book as the always-open copy.</li>
   </ol>
   <div class="note"><p><span class="hand" style="font-size:1.15rem">A note on prices —</span> Wish Books lived on prices, but this draft doesn't invent any. Every item says <b>price in store</b> until the shop itself sets it.</p></div>
-  <button class="curl prev" type="button" data-nav="prev" aria-label="Back to previous page"><span>◂ back</span></button>
-  <button class="curl next" type="button" data-nav="next" aria-label="Turn to next page"><span>flip ▸</span></button>
   <span class="pageno">PAGE 2</span>
 </div></section>
 
@@ -262,8 +251,6 @@ ol.plan b{ color:var(--red); }
     <li><button type="button" data-goto="19"><span>✎ &nbsp;My Wish List</span><span class="pg">20</span></button></li>
     <li><button type="button" data-goto="20"><span>🗓 &nbsp;The Saturday Downtown Loop</span><span class="pg">21</span></button></li>
   </ul>
-  <button class="curl prev" type="button" data-nav="prev" aria-label="Back to previous page"><span>◂ back</span></button>
-  <button class="curl next" type="button" data-nav="next" aria-label="Turn to next page"><span>flip ▸</span></button>
   <span class="pageno">PAGE 3</span>
 </div></section>
 
@@ -280,8 +267,6 @@ ol.plan b{ color:var(--red); }
     <div class="item" data-wish="Music lessons — Sound of Music"><div class="no">Wish No. 403</div><h3>One-on-One Music Lessons</h3><p>Guitar, piano, drums and more, taught in-store. A month of lessons is the gift that keeps playing all year.</p><span class="tag gold">Gift it</span><br><button class="circle-btn" type="button">Circle this wish ♡</button><p class="small" style="margin-top:5px">Price in store</p></div>
     <div class="item" data-wish="Instrument repair / setup — Sound of Music"><div class="no">Wish No. 404</div><h3>Repairs, Pedals &amp; Used Gear</h3><p>Expert instrument repair, effects pedals, amps — plus a rotating wall of “new to us” used gear from Schecter, Gretsch, Ibanez &amp; Squier.</p><span class="tag teal">Treasure hunt</span><br><button class="circle-btn" type="button">Circle this wish ♡</button><p class="small" style="margin-top:5px">Price in store</p></div>
   </div>
-  <button class="curl prev" type="button" data-nav="prev" aria-label="Back to previous page"><span>◂ back</span></button>
-  <button class="curl next" type="button" data-nav="next" aria-label="Turn to next page"><span>flip ▸</span></button>
   <span class="pageno">PAGE 4</span>
 </div></section>
 
@@ -297,8 +282,6 @@ ol.plan b{ color:var(--red); }
     <div class="item" data-wish="Seiko / Citizen / Tissot watch — Palmer's Jewelry"><div class="no">Wish No. 503</div><h3>Watches: Seiko, Citizen, Tissot, Luminox</h3><p>From a Seiko Prospex Speedtimer Solar to Swiss Army — plus an authorized Swiss Army Service Center and three watchmakers for repairs.</p><span class="tag teal">Watch counter</span><br><button class="circle-btn" type="button">Circle this wish ♡</button><p class="small" style="margin-top:5px">Price in store</p></div>
     <div class="item" data-wish="Swarovski / birthstone gift — Palmer's Jewelry"><div class="no">Wish No. 504</div><h3>Swarovski, Birthstones &amp; Pearls</h3><p>Swarovski crystal (the Matrix bracelet is a showroom favorite), sterling silver, birthstone and colored-gemstone pieces, pearl collections, Galway Crystal and Howard Miller clocks.</p><span class="tag">Under-the-tree ready</span><br><button class="circle-btn" type="button">Circle this wish ♡</button><p class="small" style="margin-top:5px">Price in store</p></div>
   </div>
-  <button class="curl prev" type="button" data-nav="prev" aria-label="Back to previous page"><span>◂ back</span></button>
-  <button class="curl next" type="button" data-nav="next" aria-label="Turn to next page"><span>flip ▸</span></button>
   <span class="pageno">PAGE 5</span>
 </div></section>
 
@@ -314,8 +297,6 @@ ol.plan b{ color:var(--red); }
     <div class="item" data-wish="Desert Bloom pearl-snap — The Elevated Hippie"><div class="no">Wish No. 603</div><h3>Desert Bloom Western Pearl Snap</h3><p>Hand-embroidered western snap shirt — the piece dads and husbands apparently love as much as anyone.</p><span class="tag gold">Hand-embroidered</span><br><button class="circle-btn" type="button">Circle this wish ♡</button><p class="small" style="margin-top:5px">Price in store</p></div>
     <div class="item" data-wish="Boho outfit / gift — The Elevated Hippie"><div class="no">Wish No. 604</div><h3>Denim Vests, Rompers &amp; Surprises</h3><p>V-neck sleeveless denim vests, anniversary-worthy rompers — and orders that arrive with free earrings and a handwritten thank-you.</p><span class="tag red">Something for everyone</span><br><button class="circle-btn" type="button">Circle this wish ♡</button><p class="small" style="margin-top:5px">Price in store</p></div>
   </div>
-  <button class="curl prev" type="button" data-nav="prev" aria-label="Back to previous page"><span>◂ back</span></button>
-  <button class="curl next" type="button" data-nav="next" aria-label="Turn to next page"><span>flip ▸</span></button>
   <span class="pageno">PAGE 6</span>
 </div></section>
 
@@ -332,8 +313,6 @@ ol.plan b{ color:var(--red); }
     <div class="item" data-wish="Pottery party booking — Fired Arts Studio"><div class="no">Wish No. 703</div><h3>A Party at the Studio</h3><p>Children's and adult birthday parties, bridal showers, team building, Scout troops, schools &amp; field trips.</p><span class="tag gold">Book the room</span><br><button class="circle-btn" type="button">Circle this wish ♡</button><p class="small" style="margin-top:5px">Price in store</p></div>
     <div class="item" data-wish="Fired Arts gift card — Fired Arts Studio"><div class="no">Wish No. 704</div><h3>Gift Card, Any Amount</h3><p>The Wish Book classic: a card they spend on an afternoon making something. Available in any amount.</p><span class="tag">Always fits</span><br><button class="circle-btn" type="button">Circle this wish ♡</button><p class="small" style="margin-top:5px">Price in store</p></div>
   </div>
-  <button class="curl prev" type="button" data-nav="prev" aria-label="Back to previous page"><span>◂ back</span></button>
-  <button class="curl next" type="button" data-nav="next" aria-label="Turn to next page"><span>flip ▸</span></button>
   <span class="pageno">PAGE 7</span>
 </div></section>
 
@@ -349,8 +328,6 @@ ol.plan b{ color:var(--red); }
     <div class="item" data-wish="Holiday Bazaar finds — Kokomo Art Association"><div class="no">Wish No. 803</div><h3>The Annual Holiday Bazaar</h3><p>November–December at Artworks Gallery: the season's handmade market, and the most Wish-Book event in Kokomo.</p><span class="tag">Nov–Dec</span><br><button class="circle-btn" type="button">Circle this wish ♡</button><p class="small" style="margin-top:5px">Price in gallery</p></div>
     <div class="item" data-wish="Art Center visit / volunteer gift shop — Kokomo Art Association"><div class="no">Wish No. 804</div><h3>Art Center Afternoon + Gift Shop</h3><p>Rotating exhibits Tue–Sat 1–4 (Feb–Nov), the volunteer-run gift shop of small artful pieces, and the Little Free Art Library out front — take a piece, leave a piece, 24/7.</p><span class="tag teal">Admission free</span><br><button class="circle-btn" type="button">Circle this wish ♡</button><p class="small" style="margin-top:5px">Price in shop</p></div>
   </div>
-  <button class="curl prev" type="button" data-nav="prev" aria-label="Back to previous page"><span>◂ back</span></button>
-  <button class="curl next" type="button" data-nav="next" aria-label="Turn to next page"><span>flip ▸</span></button>
   <span class="pageno">PAGE 8</span>
 </div></section>
 
@@ -366,8 +343,6 @@ ol.plan b{ color:var(--red); }
     <div class="item" data-wish="Pendleton wool duster — P.F. Hendricks & Co."><div class="no">Wish No. 903</div><h3>Pendleton Long Wool Duster</h3><p>The statement piece. A long Pendleton wool duster that turns a Kokomo winter sidewalk into a runway.</p><span class="tag red">Statement piece</span><br><button class="circle-btn" type="button">Circle this wish ♡</button><p class="small" style="margin-top:5px">Price in store</p></div>
     <div class="item" data-wish="Chaco / Smartwool / hammock gear — P.F. Hendricks & Co."><div class="no">Wish No. 904</div><h3>Chacos, Smartwool &amp; Hammock Weather</h3><p>Chaco sandals, Smartwool socks (ask about the otter ones), ENO hammock chair stands, Nocs zoom tubes and Baabaazuzu hoody scarves.</p><span class="tag gold">Stocking stuffers</span><br><button class="circle-btn" type="button">Circle this wish ♡</button><p class="small" style="margin-top:5px">Price in store</p></div>
   </div>
-  <button class="curl prev" type="button" data-nav="prev" aria-label="Back to previous page"><span>◂ back</span></button>
-  <button class="curl next" type="button" data-nav="next" aria-label="Turn to next page"><span>flip ▸</span></button>
   <span class="pageno">PAGE 9</span>
 </div></section>
 
@@ -384,8 +359,6 @@ ol.plan b{ color:var(--red); }
     <div class="item" data-wish="Formal / occasion outfit — Esther's Place Boutique"><div class="no">Wish No. 1005</div><h3>Esther's Place Boutique</h3><p>📍 414 W. Taylor St. — Beautiful suits, formal, casual and professional clothing in sizes 4–34, plus jewelry, handbags, scarves and hats. New arrivals weekly; call or text for an appointment.</p><span class="tag">Sizes 4–34</span><br><button class="circle-btn" type="button">Circle this wish ♡</button><p class="small" style="margin-top:5px">Price in store</p></div>
     <div class="item" data-wish="Vintage / handmade find — Eclectic Me"><div class="no">Wish No. 1006</div><h3>Eclectic Me</h3><p>📍 1403 Home Ave. — Boutique clothing, handmade jewelry, T-shirts, artwork and vintage finds in one eclectic little shop.</p><span class="tag gold">Vintage + handmade</span><br><button class="circle-btn" type="button">Circle this wish ♡</button><p class="small" style="margin-top:5px">Price in store</p></div>
   </div>
-  <button class="curl prev" type="button" data-nav="prev" aria-label="Back to previous page"><span>◂ back</span></button>
-  <button class="curl next" type="button" data-nav="next" aria-label="Turn to next page"><span>flip ▸</span></button>
   <span class="pageno">PAGE 10</span>
 </div></section>
 
@@ -400,8 +373,6 @@ ol.plan b{ color:var(--red); }
     <div class="item" data-wish="Vintage action figure — Kokomo Toys & Collectibles"><div class="no">Wish No. 1101</div><h3>Vintage Action Figures, 1970s–90s</h3><p>G.I. Joe, Transformers and the figures you swore you'd never sell (someone sold theirs — it's here). Clean store, correct pricing, friendly staff.</p><span class="tag red">Nostalgia aisle</span><br><button class="circle-btn" type="button">Circle this wish ♡</button><p class="small" style="margin-top:5px">Price in store</p></div>
     <div class="item" data-wish="New release / Funko Pop — Kokomo Toys & Collectibles"><div class="no">Wish No. 1102</div><h3>New Releases &amp; Funko Pops</h3><p>All the new releases alongside the vintage grails — Dino-Riders sightings included. 1,000+ reviewers can't be wrong.</p><span class="tag teal">New + vintage</span><br><button class="circle-btn" type="button">Circle this wish ♡</button><p class="small" style="margin-top:5px">Price in store</p></div>
   </div>
-  <button class="curl prev" type="button" data-nav="prev" aria-label="Back to previous page"><span>◂ back</span></button>
-  <button class="curl next" type="button" data-nav="next" aria-label="Turn to next page"><span>flip ▸</span></button>
   <span class="pageno">PAGE 11</span>
 </div></section>
 
@@ -416,8 +387,6 @@ ol.plan b{ color:var(--red); }
     <div class="item" data-wish="Pokémon / sports cards — DnA Trading Cards"><div class="no">Wish No. 1203</div><h3>DnA Trading Cards &amp; Collectibles</h3><p>📍 2008 S. Elizabeth St. — Kokomo's newer card shop, specializing in Pokémon and sports cards. A fresh binder to flip through.</p><span class="tag gold">Pokémon + sports</span><br><button class="circle-btn" type="button">Circle this wish ♡</button><p class="small" style="margin-top:5px">Price in store</p></div>
     <div class="item" data-wish="Arcade session — Scanlines Arcade"><div class="no">Wish No. 1204</div><h3>Scanlines Arcade</h3><p>A gamers' paradise of new and vintage pinball and arcade machines — gift a session and a pocketful of plays to your favorite teen (or yourself).</p><span class="tag">Pinball</span><br><button class="circle-btn" type="button">Circle this wish ♡</button><p class="small" style="margin-top:5px">Price in store</p></div>
   </div>
-  <button class="curl prev" type="button" data-nav="prev" aria-label="Back to previous page"><span>◂ back</span></button>
-  <button class="curl next" type="button" data-nav="next" aria-label="Turn to next page"><span>flip ▸</span></button>
   <span class="pageno">PAGE 12</span>
 </div></section>
 
@@ -433,8 +402,6 @@ ol.plan b{ color:var(--red); }
     <div class="item" data-wish="Glass class — Kokomo Opalescent Glass"><div class="no">Wish No. 1303</div><h3>A Glass Class</h3><p>Hands-on classes where you leave with a project that's truly your own — students rave about the balance of teaching and doing.</p><span class="tag gold">Make it</span><br><button class="circle-btn" type="button">Circle this wish ♡</button><p class="small" style="margin-top:5px">Price in store</p></div>
     <div class="item" data-wish="Scrap sale glass — Kokomo Opalescent Glass"><div class="no">Wish No. 1304</div><h3>Scrap Sale Day</h3><p>Follow their socials for scrap sales: beautiful broken sheets and chunks, organized by color, by the scoop or the stack. A treasure hunt in a rainbow.</p><span class="tag">Treasure hunt</span><br><button class="circle-btn" type="button">Circle this wish ♡</button><p class="small" style="margin-top:5px">Price in store</p></div>
   </div>
-  <button class="curl prev" type="button" data-nav="prev" aria-label="Back to previous page"><span>◂ back</span></button>
-  <button class="curl next" type="button" data-nav="next" aria-label="Turn to next page"><span>flip ▸</span></button>
   <span class="pageno">PAGE 13</span>
 </div></section>
 
@@ -449,8 +416,6 @@ ol.plan b{ color:var(--red); }
     <div class="item" data-wish="Home goods gift — Humble Home"><div class="no">Wish No. 1403</div><h3>Humble Home</h3><p>Home goods and gifts with a humble, handmade heart — the place to find the thing that makes a house feel finished.</p><span class="tag gold">For the home</span><br><button class="circle-btn" type="button">Circle this wish ♡</button><p class="small" style="margin-top:5px">Price in store</p></div>
     <div class="item" data-wish="Fresh flowers — Banner Flower House"><div class="no">Wish No. 1404</div><h3>Banner Flower House</h3><p>📍 1017 S. Buckeye St. — Kokomo's florist for the bouquet that says it before the card does. Order ahead for the holidays.</p><span class="tag">Fresh cut</span><br><button class="circle-btn" type="button">Circle this wish ♡</button><p class="small" style="margin-top:5px">Price in store</p></div>
   </div>
-  <button class="curl prev" type="button" data-nav="prev" aria-label="Back to previous page"><span>◂ back</span></button>
-  <button class="curl next" type="button" data-nav="next" aria-label="Turn to next page"><span>flip ▸</span></button>
   <span class="pageno">PAGE 14</span>
 </div></section>
 
@@ -467,8 +432,6 @@ ol.plan b{ color:var(--red); }
     <div class="item" data-wish="Coterie gift card — The Coterie"><div class="no">Wish No. 1504</div><h3>Gift Card: A Burger Night Out</h3><p>The easiest wish in the book to give and the happiest to get. A night upstairs — dinner, drinks, live music.</p><span class="tag">Gift card</span><br><button class="circle-btn" type="button">Circle this wish ♡</button><p class="small" style="margin-top:5px">Price in store</p></div>
   </div>
   <div class="note"><p><b>Good to know:</b> dine-in at The Coterie is <b>21+</b> — and <b>carry-out is available</b>, so the burgers can still come home to everybody.</p></div>
-  <button class="curl prev" type="button" data-nav="prev" aria-label="Back to previous page"><span>◂ back</span></button>
-  <button class="curl next" type="button" data-nav="next" aria-label="Turn to next page"><span>flip ▸</span></button>
   <span class="pageno">PAGE 15</span>
 </div></section>
 
@@ -485,8 +448,6 @@ ol.plan b{ color:var(--red); }
     <div class="item" data-wish="Pizza & golf night — Ralphy's"><div class="no">Wish No. 1605</div><h3>Ralphy's Pizza, Golf &amp; Duckpin Bowling</h3><p>Pizza plus sports simulators and duckpin bowling — the family night out, giftable in one stop.</p><span class="tag">Family night</span><br><button class="circle-btn" type="button">Circle this wish ♡</button><p class="small" style="margin-top:5px">Price in store</p></div>
     <div class="item" data-wish="Bowling night — Heritage Lanes"><div class="no">Wish No. 1606</div><h3>Heritage Lanes</h3><p>32 lanes, a sports pub &amp; grill, an arcade — and cosmic bowling on Friday nights. Gift a lane and a pitcher of friendly rivalry.</p><span class="tag teal">Cosmic Fridays</span><br><button class="circle-btn" type="button">Circle this wish ♡</button><p class="small" style="margin-top:5px">Price in store</p></div>
   </div>
-  <button class="curl prev" type="button" data-nav="prev" aria-label="Back to previous page"><span>◂ back</span></button>
-  <button class="curl next" type="button" data-nav="next" aria-label="Turn to next page"><span>flip ▸</span></button>
   <span class="pageno">PAGE 16</span>
 </div></section>
 
@@ -504,8 +465,6 @@ ol.plan b{ color:var(--red); }
     <div class="item" data-wish="Press-on nail set — Nailzx.jazz"><div class="no">First Friday</div><h3>Nailzx.jazz</h3><p>📍 113 W. Sycamore St. — Create-your-own press-on nail sets: pick the shapes, pick the art, wear them home.</p><br><button class="circle-btn" type="button">Circle this wish ♡</button></div>
     <div class="item" data-wish="First Friday at the anchors — downtown Kokomo"><div class="no">First Friday</div><h3>The Anchor Hosts</h3><p>Sound of Music (106 W. Walnut) · Fired Arts Studio (111 W. Sycamore) · Artworks Gallery / KAA (210 N. Main) · P.F. Hendricks (101 N. Buckeye) hosts StudioD13 and other makers in-store.</p><br><button class="circle-btn" type="button">Circle this wish ♡</button></div>
   </div>
-  <button class="curl prev" type="button" data-nav="prev" aria-label="Back to previous page"><span>◂ back</span></button>
-  <button class="curl next" type="button" data-nav="next" aria-label="Turn to next page"><span>flip ▸</span></button>
   <span class="pageno">PAGE 17</span>
 </div></section>
 
@@ -525,8 +484,6 @@ ol.plan b{ color:var(--red); }
     <div class="item" data-wish="Mini donuts & lemon shake-up — KRA-Z Donuts"><div class="no">Courthouse Square</div><h3>KRA-Z Donuts</h3><p>Mini cake donuts and lemon shake-ups — the official fuel of walking the square.</p><br><button class="circle-btn" type="button">Circle this wish ♡</button><p class="small" style="margin-top:5px">Price in store</p></div>
     <div class="item" data-wish="First Friday After Hours (21+) — downtown Kokomo"><div class="no">After 8pm · 21+</div><h3>After Hours</h3><p>When the family hours end at 8, the grown-up edition begins — cocktails and late sets downtown for the 21+ crowd.</p><br><button class="circle-btn" type="button">Circle this wish ♡</button><p class="small" style="margin-top:5px">Downtown, after 8</p></div>
   </div>
-  <button class="curl prev" type="button" data-nav="prev" aria-label="Back to previous page"><span>◂ back</span></button>
-  <button class="curl next" type="button" data-nav="next" aria-label="Turn to next page"><span>flip ▸</span></button>
   <span class="pageno">PAGE 18</span>
 </div></section>
 
@@ -543,8 +500,6 @@ ol.plan b{ color:var(--red); }
     <div class="item" data-wish="Trampoline / activity day — Gravity Trampoline Park"><div class="no">Wish No. 1905</div><h3>Gravity Trampoline Park</h3><p>18,000 square feet of trampolines and climbing walls in the Markland Mall, with a parents' lounge for the wisely seated.</p><span class="tag">For the bouncers</span><br><button class="circle-btn" type="button">Circle this wish ♡</button><p class="small" style="margin-top:5px">Price in store</p></div>
     <div class="item" data-wish="Go-karts / mini golf — Raceway Fun Park"><div class="no">Wish No. 1906</div><h3>Raceway Fun Park</h3><p>Go-kart races, miniature golf, and one-of-a-kind citrus drinks and sodas from the concession stand. Settle a family championship properly.</p><span class="tag teal">Rematch clause</span><br><button class="circle-btn" type="button">Circle this wish ♡</button><p class="small" style="margin-top:5px">Price in store</p></div>
   </div>
-  <button class="curl prev" type="button" data-nav="prev" aria-label="Back to previous page"><span>◂ back</span></button>
-  <button class="curl next" type="button" data-nav="next" aria-label="Turn to next page"><span>flip ▸</span></button>
   <span class="pageno">PAGE 19</span>
 </div></section>
 
@@ -558,8 +513,6 @@ ol.plan b{ color:var(--red); }
   <ul id="wishListOut"></ul>
   <div class="note"><p><span class="hand" style="font-size:1.15rem">Hint-dropping instructions —</span> Leave this page open. Mention it within earshot of family. Repeat as needed until the holidays.</p></div>
   <p class="small">Your circles live on this page for this visit only — screenshot or print the book from your browser to keep them.</p>
-  <button class="curl prev" type="button" data-nav="prev" aria-label="Back to previous page"><span>◂ back</span></button>
-  <button class="curl next" type="button" data-nav="next" aria-label="Turn to next page"><span>flip ▸</span></button>
   <span class="pageno">PAGE 20</span>
 </div></section>
 
@@ -580,8 +533,6 @@ ol.plan b{ color:var(--red); }
   </ol>
   <h3>About this draft</h3>
   <p class="small">A concept draft of a Kokomo local-business Wish Book, written as if every shop has said yes. Listings are built from each business's real offerings and addresses as researched in October 2026; hours can change, and no prices are stated — each shop sets its own when the real edition is made. Cover and interior art are painted catalog-style illustrations created for this draft, not photographs of the shops. Sources: the businesses' own listings and sites, Greater Kokomo, and Visit Kokomo.</p>
-  <button class="curl prev" type="button" data-nav="prev" aria-label="Back to previous page"><span>◂ back</span></button>
-  <button class="curl next" type="button" data-nav="next" aria-label="Turn to next page"><span>flip ▸</span></button>
   <span class="pageno">PAGE 21</span>
 </div></section>
 
@@ -594,13 +545,14 @@ ol.plan b{ color:var(--red); }
   <p>Guitars on Walnut · Diamonds on Sycamore<br>Pottery you paint · Glass from 1888<br>Burgers upstairs · Art for a hundred years</p>
   <div class="barcode"><div class="bars"></div><div class="num">KOKOMO · IN · 46901</div></div>
   <p class="hand" style="color:#ffd9a8;font-size:1.3rem">Now go circle something in person.</p>
-  <button class="curl prev" type="button" data-nav="prev" aria-label="Back to previous page"><span>◂ back</span></button>
   <span class="pageno" style="color:#cfe3d6">BACK COVER</span>
 </div></section>
 
+<button class="nav-arrow prev-arrow" id="sidePrev" type="button" aria-label="Previous page">‹</button>
+<button class="nav-arrow next-arrow" id="sideNext" type="button" aria-label="Next page">›</button>
 </div>
 </div>
-<p class="foot-hint">📖 <b>How to flip:</b> tap the curled bottom corner of any page — bottom-right goes forward, bottom-left goes back. Arrow keys work too, and swiping on a phone. Tap <b>Circle this wish ♡</b> to build your list on page 20.</p>
+<p class="foot-hint">📖 <b>How to flip:</b> tap the ‹ › arrows at the sides, or tap the left or right side of any page — right side goes forward, left side goes back. Arrow keys and swiping work too. Tap <b>Circle this wish ♡</b> to build your list on page 20.</p>
 
 <script>
 (function(){
@@ -611,6 +563,9 @@ ol.plan b{ color:var(--red); }
   var pill = document.getElementById('pagePill');
   var prevBtn = document.getElementById('prevBtn');
   var nextBtn = document.getElementById('nextBtn');
+  var sidePrev = document.getElementById('sidePrev');
+  var sideNext = document.getElementById('sideNext');
+  var bookEl = document.getElementById('book');
   var names = ['Cover','Welcome & The Plan','Contents','Sound of Music',"Palmer's Jewelry",'The Elevated Hippie','Fired Arts Studio','Kokomo Art Association','P.F. Hendricks & Co.','Boutiques & Bridal','Kokomo Toys','Cards & Collectibles','Opalescent Glass','Antiques & Home','The Coterie','Eats & Sweet Gifts','First Friday Favorites','First Friday — Pop-Ups','Makers & Curiosities','My Wish List','Saturday Loop','Back Cover'];
   function layout(){
     leaves.forEach(function(leaf,i){
@@ -619,6 +574,8 @@ ol.plan b{ color:var(--red); }
     });
     pill.textContent = (current===0||current===total-1) ? names[current] : ('Page ' + (current+1) + ' of ' + total + ' · ' + names[current]);
     prevBtn.disabled = current===0; nextBtn.disabled = current===total-1;
+    if(sidePrev) sidePrev.disabled = current===0;
+    if(sideNext) sideNext.disabled = current===total-1;
   }
   function goNext(){
     if(busy || current>=total-1) return; busy=true;
@@ -639,8 +596,6 @@ ol.plan b{ color:var(--red); }
     leaves.forEach(function(l){ l.querySelector('.face').scrollTop=0; });
   }
   document.addEventListener('click', function(e){
-    var nav = e.target.closest('[data-nav]');
-    if(nav){ if(nav.getAttribute('data-nav')==='next') goNext(); else goPrev(); return; }
     var g = e.target.closest('[data-goto]');
     if(g){ goTo(parseInt(g.getAttribute('data-goto'),10)); return; }
     var cb = e.target.closest('.circle-btn');
@@ -649,10 +604,22 @@ ol.plan b{ color:var(--red); }
       item.classList.toggle('wished');
       cb.textContent = item.classList.contains('wished') ? 'Circled! ✓' : 'Circle this wish ♡';
       renderWish();
+      return;
+    }
+    // Side-of-page tap: clicking the left or right side of the current page turns it.
+    // Interactive elements (links, buttons) are excluded so nothing else is hijacked.
+    var face = e.target.closest('.face');
+    if(face && bookEl.contains(face) && !e.target.closest('a,button')){
+      var rect = bookEl.getBoundingClientRect();
+      var rel = (e.clientX - rect.left) / rect.width;
+      if(rel <= 0.30){ goPrev(); }
+      else if(rel >= 0.70){ goNext(); }
     }
   });
   prevBtn.addEventListener('click', goPrev);
   nextBtn.addEventListener('click', goNext);
+  if(sidePrev) sidePrev.addEventListener('click', function(e){ e.stopPropagation(); goPrev(); });
+  if(sideNext) sideNext.addEventListener('click', function(e){ e.stopPropagation(); goNext(); });
   document.getElementById('tocBtn').addEventListener('click', function(){ goTo(2); });
   document.addEventListener('keydown', function(e){
     if(e.key==='ArrowRight') goNext(); if(e.key==='ArrowLeft') goPrev();
